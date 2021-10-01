@@ -7,5 +7,5 @@ class Biblioteca{
         Libro libros[20];
         Libro libros[20];
     public:
-        int cuantosEjemplaresHay();
+        int cuantosEjemplaresHay(0);
 };
