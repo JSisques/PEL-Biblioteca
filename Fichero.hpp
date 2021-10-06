@@ -7,6 +7,7 @@
 
 using namespace std;
 
+
 class Fichero{
     private:
         string fileName;
@@ -17,6 +18,7 @@ class Fichero{
         string crearJSONLibro();
         string guardarJSON(string, string, string);
         bool existeDirectorio(string);
+        string leerDatosFichero(string, string, string);
         //Biblioteca leerDatosJSON(string);
         //Usuario leerDatosJSON(string);
 };
@@ -108,6 +110,28 @@ string Fichero::crearJSONBiblioteca(Biblioteca biblioteca){
 
     json += "]";
 
+    return json;
+}
+
+/*
+Este metodo lee el contenido de un fichero ubicado en una ruta pasado por parámetro.
+Devuelve el contenido del propio fichero en forma de string
+*/
+string Fichero::leerDatosFichero(string path, string nombre, string extension){
+    path = path + nombre + extension;
+    string json = "";
+
+    //Abrimos el fichero
+    ifstream input_file(path);
+
+    if (!input_file.is_open()){
+        cerr << "No se ha podido abrir el archivo de la ruta " << path;
+    }
+    
+    //Leemos el fichero
+    json = string((std::istreambuf_iterator<char>(input_file)), std::istreambuf_iterator<char>());
+
+    cout << json << endl;
     return json;
 }
 

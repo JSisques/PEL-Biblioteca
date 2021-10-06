@@ -18,6 +18,7 @@ int main() {
 
     string json = f.crearJSONUsuario();
     f.guardarJSON(Constants::DATA_USER_PATH ,json, "usuarioPrueba");
+    f.leerDatosFichero(Constants::DATA_USER_PATH, "usuarioPrueba", Constants::JSON_EXTENSION);
     json = f.crearJSONBiblioteca(b);
     f.guardarJSON(Constants::DATA_LIBRARY_PATH, json, "Biblioteca");
 
@@ -48,13 +49,13 @@ void pintarMenu(){
 Ver el historial de libros de una persona 
 Ver si una persona tiene un libro o no 
 Sacar/Devolver un libro */
-    cout << "Elige una opción: ";
-    cout << "[] -> Comprobar libros disponibles";
-    cout << "[] -> Ver el historial de libros de una persona";
-    cout << "[] -> Ver si una persona tiene un libro o no";
-    cout << "[] -> Sacar un libro";
-    cout << "[] -> Devolver un libro";
-    cout << "[0] -> Salir";
+    cout << "[] -> Comprobar libros disponibles \n";
+    cout << "[] -> Ver el historial de libros de una persona \n";
+    cout << "[] -> Ver si una persona tiene un libro o no \n";
+    cout << "[] -> Sacar un libro \n";
+    cout << "[] -> Devolver un libro \n";
+    cout << "[0] -> Salir \n";
+    cout << "Elige una opción: \n";
 
 }
 
