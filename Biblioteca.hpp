@@ -1,15 +1,21 @@
 #include <string>
+#include <list>
+#include "Libro.hpp"
 
 using namespace std;
 
 class Biblioteca{
     private:
-        Libro arrayLibros[20];
-        //Libro arrayLibros[20];
+        list<Libro> arrayLibros;
     public:
+        list<Libro> getArrayLibros();
         int cuantosEjemplaresHayDisponibles();
         Libro anadirLibro(Libro);
 };
+
+list<Libro> Biblioteca::getArrayLibros(){
+    return arrayLibros;
+}
 
 /*
 Este método obtiene cuantos ejemplares hay disponibles en la biblioteca.
@@ -24,8 +30,6 @@ Este método añade un libro a la biblioteca.
 Devolverá el libro añadido.
 */
 Libro Biblioteca::anadirLibro(Libro libro){
-
-    
-
+    arrayLibros.push_back(libro);
     return libro;
 }

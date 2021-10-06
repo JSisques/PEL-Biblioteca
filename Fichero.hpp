@@ -1,6 +1,7 @@
 #include <string>
 #include <fstream>
 #include "Constants.hpp"
+#include "Biblioteca.hpp"
 #include "Usuario.cpp"
 #include <sys/stat.h>
 
@@ -11,11 +12,11 @@ class Fichero{
         string fileName;
         
     public:
+        string crearJSONBiblioteca(Biblioteca);
         string crearJSONUsuario();
         string crearJSONLibro();
         string guardarJSON(string, string, string);
         bool existeDirectorio(string);
-        //bool crearJSON(Biblioteca);
         //Biblioteca leerDatosJSON(string);
         //Usuario leerDatosJSON(string);
 };
@@ -80,6 +81,32 @@ string Fichero::crearJSONLibro(){
     json += "\"id\": 1, \"nombre\": \"Caminos\", \"isbn\": \"1231443SFASD\", \"categoria\": \"Horror\", \"numeroPag\": 123, \"disponible\": true";
 
     json += "}";
+
+    return json;
+}
+
+/*
+Este método creará un JSON a partir de los datos de la biblioteca pasada como parametro.
+Devolverá un String con el JSON creado.
+*/
+string Fichero::crearJSONBiblioteca(Biblioteca biblioteca){
+    string json = "[";
+    
+    /*
+    for(Libro libro: biblioteca.getArrayLibros()){
+        json += crearJSONLibro() + ",";
+    }
+    */
+
+    for (int i = 10 - 1; i >= 0; i--)
+    {
+        json += crearJSONLibro() + ",";
+    }
+
+    //Para quitar la ultima coma
+    json.pop_back();
+
+    json += "]";
 
     return json;
 }
