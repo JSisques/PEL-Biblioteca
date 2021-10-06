@@ -1,14 +1,18 @@
 #include <string>
 #include <list>
 #include "Libro.hpp"
+#include "Usuario.hpp"
 
 using namespace std;
 
 class Biblioteca{
     private:
         list<Libro> arrayLibros;
+        list<Usuario> arrayUsuarios;
     public:
+        list<Usuario> getArrayUsuarios();
         list<Libro> getArrayLibros();
+
         int cuantosEjemplaresHayDisponibles();
         Libro anadirLibro(Libro);
 };
