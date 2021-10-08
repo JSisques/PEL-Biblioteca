@@ -1,5 +1,7 @@
 
 #include <iostream>
+
+
 using namespace std;
 
 class Libro{
@@ -83,11 +85,5 @@ void Libro::setUsuarioPoseedor(Usuario user){
 //Implementación del método disponibilidad
 bool Libro::isDisponible(){
     return disponible;
-
-}
-
-int main(int argc, char *argv[]){
-
-
 
 }

@@ -1,5 +1,7 @@
 #include <string>
 #include <list>
+#include "Libro.hpp"
+//#include "Usuario.cpp"
 
 using namespace std;
 
