@@ -46,6 +46,7 @@ class Libro{
         void setIsbn(string);
         void setCategoria(string);
         void setNumeroPaginas(int);
+        void setDisponible(bool);
 
         void visualizarLibro();
 };
@@ -91,8 +92,12 @@ bool Libro::isDisponible(){
 
 };
 
+void Libro::setDisponible(bool dis){
+    disponible  = dis;
+}
+
 void Libro::visualizarLibro(){
-    cout << nombre << isbn << categoria << numeroPaginas;
+    cout << nombre << isbn << categoria << numeroPaginas << endl;
 }
 
 /*****************************************
@@ -123,6 +128,7 @@ class Usuario{
         void sacarLibro();
         void devolverLibro();
         void visualizarUsuario();
+        void anadirHistorial(Libro);
 };
 
 Usuario::Usuario(){
@@ -159,14 +165,19 @@ void Usuario::setLibroActual(Libro LIBRO){
 }
 
 
-void sacarLibro(){
+
+void Usuario::sacarLibro(){
     
 }
-void devolverLibro(){
+void Usuario::devolverLibro(){
     
 }
-void visualizarUsuario(){
+void Usuario::visualizarUsuario(){
     
+}
+
+void Usuario::anadirHistorial(Libro l){
+    historial.push_front(l);
 }
 
 /*****************************************
@@ -328,25 +339,27 @@ int main() {
 
     Libro(1, "La Biblia", "123456a", "Ciencia Ficcion", 2585, true),
     Libro(2, "Citas del Presidente Mao Tse-Tung", "123456b", "Politica", 258, true),
-    Libro(3, "Harry Potter", "123456c", "Ciencia Ficcion", 358, false),
+    Libro(3, "Harry Potter", "123456c", "Ciencia Ficcion", 358, true),
     Libro(4, "El Señor de los Anillos", "123456d", "Ciencia Ficcion", 593, true),
     Libro(5, "El Alquimista", "123456e", "Drama", 365, true),
     Libro(6, "El Codigo da Vinci", "123456f", "Misterio", 526, true),
-    Libro(7, "Crepusculo", "123456g", "Ciencia Ficcion", 487, false),
+    Libro(7, "Crepusculo", "123456g", "Ciencia Ficcion", 487, true),
     Libro(8, "Lo que el viento se llevo", "123456h", "Drama", 224, true),
     Libro(9, "Piense y hagase rico", "123456i", "Comedia", 198, true),
-    Libro(10, "El diario de Ana Frank", "123456j", "Historia", 253, false),
+    Libro(10, "El diario de Ana Frank", "123456j", "Historia", 253, true),
     Libro(11, "Luces de Bohemia", "123456k", "Ciencia Ficcion", 298, true),
-    Libro(12, "Crimen y castigo", "123456l", "Misterio", 169, false),
+    Libro(12, "Crimen y castigo", "123456l", "Misterio", 169, true),
     Libro(13, "La casa de los espiritus", "123456m", "Ciencia Ficcion", 255, true),
     Libro(14, "El extranjero", "123456n", "Comedia", 145, true),
-    Libro(15, "1984", "123456o", "Ciencia Ficcion", 364, false),
+    Libro(15, "1984", "123456o", "Ciencia Ficcion", 364, true),
     Libro(16, "La colmena", "123456p", "Ciencia Ficcion", 192, true),
-    Libro(17, "Don Quijote de la mancha", "123456q", "Ciencia Ficcion", 1595, false),
+    Libro(17, "Don Quijote de la mancha", "123456q", "Ciencia Ficcion", 1595, true),
     Libro(18, "Al faro", "123456r", "Drama", 364, true),
-    Libro(19, "Guerra y paz", "123456s", "Historia", 291, false),
+    Libro(19, "Guerra y paz", "123456s", "Historia", 291, true),
     Libro(20, "La montaña magica", "123456t", "Ciencia Ficcion", 436, true)
     };
+
+    string isbnUsuario;
 
     bool response = f.existeDirectorio("./data/library/");
     cout << response;
@@ -366,12 +379,38 @@ int main() {
         cout << opcion;
         switch (opcion){
         case 1:
-           cout << "Hola";
+           for(Libro libro: biblioteca){
+               if (libro.isDisponible()){
+                   libro.visualizarLibro();
+               }
+           }
+        case 2:
            for(Libro libro: u.getHistorial()){
                libro.visualizarLibro();
            }
-        case 2:
+        case 3:
             u.getLibroActual().visualizarLibro();
+           break;
+                
+        case 4:
+            cout << "Escribe el ISBN del libro: \n";
+            
+            cin >> isbnUsuario;
+            for(Libro libro: biblioteca){
+               if (libro.getIsbn() == isbnUsuario){
+                    u.setLibroActual(libro);
+                    u.anadirHistorial(libro);
+                    libro.setDisponible(false);
+
+                    break;
+               }
+               
+
+           }
+           break;
+
+        case 5:
+            biblioteca.push_front(u.getLibroActual());
            break;
        
         default:
