@@ -85,9 +85,12 @@ bool Libro::isDisponible(){
 
 };
 
+/*****************************************
+ * CLASE USUARIO
+ *****************************************/
+
 class Usuario{
     private:
-        int id;
         string nombre;
         string dni;
         list<Libro> historial;
@@ -96,13 +99,11 @@ class Usuario{
         //Date FechaDevolucion
 
     public:
-        int getId();
         string getNombre();
         string getDni();
         list<Libro> getHistorial();
         Libro getLibroActual();
 
-        void setId(int);
         void setNombre(string);
         void setDni(string);
         void setHistorial(list<Libro>);
@@ -113,9 +114,6 @@ class Usuario{
         void visualizarUsuario();
 };
 
-int Usuario::getId(){
-    return id;
-}
 string Usuario::getNombre(){
     return nombre;
 }
@@ -131,33 +129,33 @@ Libro Usuario::getLibroActual(){
 }
 */
 
-void Usuario::setId(int ID){
-    id = ID;
-}
 void Usuario::setNombre(string NOMBRE){
     nombre = NOMBRE;
 }
 void Usuario::setDni(string DNI){
     dni = DNI;
 }
-/*
+
+/* 
 void Usuario::setHistorial(list<Libro> HISTORIAL){
     historial = HISTORIAL;
 }
 void Usuario::setLibroActual(Libro LIBRO){
     libroActual  = LIBRO;
-}
+} 
 */
 
+void Usuario::visualizarUsuario(){
+    cout << "Nombre: "<< nombre << "DNI:"<<dni<<"\n";
+}
 void sacarLibro(){
     
 }
 void devolverLibro(){
     
 }
-void visualizarUsuario(){
-    
-}
+
+ 
 
 class Fichero{
     private:
