@@ -163,17 +163,12 @@ void Usuario::setHistorial(list<Libro> HISTORIAL){
 void Usuario::setLibroActual(Libro LIBRO){
     libroActual  = LIBRO;
 }
-
-
-
 void Usuario::sacarLibro(){
-    
 }
 void Usuario::devolverLibro(){
-    
 }
 void Usuario::visualizarUsuario(){
-    
+    cout << "Nombre: "<< nombre << "DNI:"<<dni<<"\n";
 }
 
 void Usuario::anadirHistorial(Libro l){
@@ -327,6 +322,7 @@ Usuario Fichero::leerDatosJSON(string dni){
 */
 
 void pintarMenu();
+void Bienvenida();
 
 int main() {
 
@@ -372,8 +368,17 @@ int main() {
 
     //MENÚ
     int opcion = -1;
+    string nombre;
+    string DNI;
+    
+    Bienvenida();
+    cout << "Nombre: ";
+    cin >> nombre;
+    cout << "DNI: ";
+    cin >> DNI;
+    
     do{
-
+        Bienvenida();
         pintarMenu();
         cin >> opcion;
         cout << opcion;
@@ -404,13 +409,10 @@ int main() {
 
                     break;
                }
-               
-
            }
            break;
 
         case 5:
-            
             biblioteca.push_front(u.getLibroActual());
            break;
        
@@ -430,12 +432,17 @@ void pintarMenu(){
 Ver el historial de libros de una persona 
 Ver si una persona tiene un libro o no 
 Sacar/Devolver un libro */
-    cout << "[] -> Comprobar libros disponibles \n";
-    cout << "[] -> Ver el historial de libros de una persona \n";
-    cout << "[] -> Ver si una persona tiene un libro o no \n";
-    cout << "[] -> Sacar un libro \n";
-    cout << "[] -> Devolver un libro \n";
+    cout << "[1] -> Comprobar libros disponibles \n";
+    cout << "[2] -> Ver el historial de libros de una persona \n";
+    cout << "[3] -> Ver si una persona tiene un libro o no \n";
+    cout << "[4] -> Sacar un libro \n";
+    cout << "[5] -> Devolver un libro \n";
     cout << "[0] -> Salir \n";
     cout << "Elige una opción: \n";
+}
+
+void Bienvenida(){
+    /*Bienvenida del documento*/
+    cout << "\nBienvenido a la Biblioteca Virtual \n";
 
 }
