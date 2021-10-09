@@ -49,6 +49,8 @@
         "cinttypes": "cpp",
         "typeinfo": "cpp",
         "chrono": "cpp",
-        "list": "cpp"
+        "list": "cpp",
+        "ctime": "cpp",
+        "fstream": "cpp"
     }
 }
