@@ -23,6 +23,7 @@ class Libro{
 
     public:
     //Constructor
+        Libro();
         Libro(int ID, string name, string ISBN, string cat, int np, bool disp){
             id=ID;
             nombre=name;
@@ -45,7 +46,12 @@ class Libro{
         void setIsbn(string);
         void setCategoria(string);
         void setNumeroPaginas(int);
+
+        void visualizarLibro();
 };
+Libro::Libro(){
+    
+}
 
 int Libro::getId(){
     return id;
@@ -85,9 +91,16 @@ bool Libro::isDisponible(){
 
 };
 
+void Libro::visualizarLibro(){
+    cout << nombre << isbn << categoria << numeroPaginas;
+}
+
+/*****************************************
+ * CLASE USUARIO
+ *****************************************/
+
 class Usuario{
     private:
-        int id;
         string nombre;
         string dni;
         list<Libro> historial;
@@ -96,13 +109,12 @@ class Usuario{
         //Date FechaDevolucion
 
     public:
-        int getId();
+        Usuario();
         string getNombre();
         string getDni();
         list<Libro> getHistorial();
         Libro getLibroActual();
 
-        void setId(int);
         void setNombre(string);
         void setDni(string);
         void setHistorial(list<Libro>);
@@ -113,41 +125,39 @@ class Usuario{
         void visualizarUsuario();
 };
 
-int Usuario::getId(){
-    return id;
+Usuario::Usuario(){
+
 }
+
 string Usuario::getNombre(){
     return nombre;
 }
 string Usuario::getDni(){
     return dni;
 }
-/*
+
 list<Libro> Usuario::getHistorial(){
     return historial;
 }
 Libro Usuario::getLibroActual(){
     return libroActual;
 }
-*/
 
-void Usuario::setId(int ID){
-    id = ID;
-}
+
 void Usuario::setNombre(string NOMBRE){
     nombre = NOMBRE;
 }
 void Usuario::setDni(string DNI){
     dni = DNI;
 }
-/*
+
 void Usuario::setHistorial(list<Libro> HISTORIAL){
     historial = HISTORIAL;
 }
 void Usuario::setLibroActual(Libro LIBRO){
     libroActual  = LIBRO;
 }
-*/
+
 
 void sacarLibro(){
     
@@ -158,6 +168,10 @@ void devolverLibro(){
 void visualizarUsuario(){
     
 }
+
+/*****************************************
+ * CLASE FICHERO
+ *****************************************/
 
 class Fichero{
     private:
@@ -305,6 +319,7 @@ void pintarMenu();
 
 int main() {
 
+    Usuario u = Usuario();
     Fichero f = Fichero();
     //Biblioteca b = Biblioteca();
     //Usuario u = Usuario(0, "Prueba", "11111111J");
@@ -324,9 +339,15 @@ int main() {
 
         pintarMenu();
         cin >> opcion;
+        cout << opcion;
         switch (opcion){
         case 1:
-           /* code */
+           cout << "Hola";
+           for(Libro libro: u.getHistorial()){
+               libro.visualizarLibro();
+           }
+        case 2:
+            u.getLibroActual().visualizarLibro();
            break;
        
         default:
