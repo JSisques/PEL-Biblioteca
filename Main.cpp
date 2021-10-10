@@ -97,7 +97,7 @@ void Libro::setDisponible(bool dis){
 }
 
 void Libro::visualizarLibro(){
-    cout << nombre << isbn << categoria << numeroPaginas << endl;
+    cout << nombre << " " << isbn << " " << categoria << " " << numeroPaginas << " " << disponible << endl;
 }
 
 /*****************************************
@@ -115,6 +115,7 @@ class Usuario{
 
     public:
         Usuario();
+        Usuario(string, string);
         string getNombre();
         string getDni();
         list<Libro> getHistorial();
@@ -133,6 +134,11 @@ class Usuario{
 
 Usuario::Usuario(){
 
+}
+
+Usuario::Usuario(string NOMBRE, string DNI){
+    nombre = NOMBRE;
+    dni = DNI;
 }
 
 string Usuario::getNombre(){
@@ -326,7 +332,6 @@ void Bienvenida();
 
 int main() {
 
-    Usuario u = Usuario();
     Fichero f = Fichero();
     //Biblioteca b = Biblioteca();
     //Usuario u = Usuario(0, "Prueba", "11111111J");
@@ -356,6 +361,7 @@ int main() {
     };
 
     string isbnUsuario;
+    list <Libro>::iterator itrLibro;
 
     bool response = f.existeDirectorio("./data/library/");
     cout << response;
@@ -376,12 +382,13 @@ int main() {
     cin >> nombre;
     cout << "DNI: ";
     cin >> DNI;
+
+    Usuario u = Usuario(nombre, DNI);
     
     do{
         Bienvenida();
         pintarMenu();
         cin >> opcion;
-        cout << opcion;
         switch (opcion){
         case 1:
            for(Libro libro: biblioteca){
@@ -389,10 +396,12 @@ int main() {
                    libro.visualizarLibro();
                }
            }
+           break;
         case 2:
            for(Libro libro: u.getHistorial()){
                libro.visualizarLibro();
            }
+           break;
         case 3:
             u.getLibroActual().visualizarLibro();
            break;
@@ -401,19 +410,28 @@ int main() {
             cout << "Escribe el ISBN del libro: \n";
             
             cin >> isbnUsuario;
-            for(Libro libro: biblioteca){
-               if (libro.getIsbn() == isbnUsuario){
-                    u.setLibroActual(libro);
-                    u.anadirHistorial(libro);
-                    libro.setDisponible(false);
 
-                    break;
-               }
-           }
+            
+            for(itrLibro = biblioteca.begin(); itrLibro != biblioteca.end(); itrLibro++) {
+                if((*itrLibro).getIsbn() == isbnUsuario) {
+                    u.setLibroActual(*itrLibro);
+                    u.anadirHistorial(*itrLibro);
+                    (*itrLibro).setDisponible(false);
+                }
+            }
+           
+           
            break;
 
         case 5:
-            biblioteca.push_front(u.getLibroActual());
+            //biblioteca.push_front(u.getLibroActual());
+
+            for(itrLibro = biblioteca.begin(); itrLibro != biblioteca.end(); itrLibro++) {
+                if((*itrLibro).getIsbn() == u.getLibroActual().getIsbn()) {
+                    (*itrLibro).setDisponible(true);
+                }
+            }
+
            break;
        
         default:
