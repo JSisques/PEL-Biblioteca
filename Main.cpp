@@ -1,7 +1,6 @@
 #include <string>
 #include <list>
 #include <iostream>
-#include <iostream>
 #include <sys/stat.h>
 #include <fstream>
 
@@ -174,7 +173,7 @@ void Usuario::sacarLibro(){
 void Usuario::devolverLibro(){
 }
 void Usuario::visualizarUsuario(){
-    cout << "Nombre: "<< nombre << "DNI:"<<dni<<"\n";
+    cout << "Nombre: "<< nombre << " DNI:"<<dni<<"\n";
 }
 
 void Usuario::anadirHistorial(Libro l){
@@ -190,8 +189,8 @@ class Fichero{
         string fileName;
         
     public:
-        //string crearJSONBiblioteca(Biblioteca);
-        string crearJSONUsuario();
+        string crearJSONBiblioteca(list<Libro>);
+        string crearJSONUsuario(Usuario);
         string crearJSONLibro(Libro);
         string guardarJSON(string, string, string);
         bool existeDirectorio(string);
@@ -231,20 +230,21 @@ bool Fichero::existeDirectorio(string path){
 Este método creará un JSON a partir de los datos del usuario pasado como parametro.
 Devolverá un String con el JSON creado.
 */
-string Fichero::crearJSONUsuario(){
+string Fichero::crearJSONUsuario(Usuario user){
     string json = "{";
 
-    //json += "\"id\": " + user.getId() + ",";
-    //json += "\"dni\": " + user.getDni() + ",";
-    //json += "\"nombre\": " + user.getNombre() + ",";
-    //json += "\"libroActual\": { \"id\": " + user.getLibroActual().getId() + ", \"nombre\": " + user.getLibroActual().getNombre()  + ", \"isbn\": " + user.getLibroActual().getIsbn()  + ", \"categoria\": " + user.getLibroActual().getCategoria()  + ", \"numeroPag\": " + user.getLibroActual().getNumeroPag() + ", \"disponible\": " + user.getLibroActual().getDisponible() + "}";
+    json += "\"dni\": \"" + user.getDni() + "\",";
+    json += "\"nombre\": \"" + user.getNombre() + "\",";
+    json += "\"libroActual\": " + crearJSONLibro(user.getLibroActual()) + ",";
+    json += "\"historial\": " + crearJSONBiblioteca(user.getHistorial());
 
+    /*
     json += "\"id\": 1,";
     json += "\"dni\": \"11111111P\",";
     json += "\"nombre\": \"Prueba\",";
     json += "\"libroActual\": " + crearJSONLibro(Libro(0,"Prueba", "23424ff", "Horror", 123, true));
 
-
+    */
     json += "}";
 
     return json;
@@ -257,7 +257,7 @@ Devolverá un String con el JSON creado.
 string Fichero::crearJSONLibro(Libro libro){
     string json = "{";
 
-    json += "\"id\": " + std::to_string(libro.getId()) + "\"nombre\":" + libro.getNombre() + "\"isbn\": " + libro.getIsbn() + "\"categoria\": " + libro.getCategoria() + "\"numeroPag\": " + std::to_string(libro.getNumeroPaginas()) + "\"disponible\":" + std::to_string(libro.isDisponible());
+    json += "\"id\": " + std::to_string(libro.getId()) + ", \"nombre\": \"" + libro.getNombre() + "\", \"isbn\": \"" + libro.getIsbn() + "\", \"categoria\": \"" + libro.getCategoria() + "\",\"numeroPag\": " + std::to_string(libro.getNumeroPaginas()) + ", \"disponible\":" + std::to_string(libro.isDisponible());
     //json += "\"id\": 1, \"nombre\": \"Caminos\", \"isbn\": \"1231443SFASD\", \"categoria\": \"Horror\", \"numeroPag\": 123, \"disponible\": true";
 
     json += "}";
@@ -270,8 +270,8 @@ Este método creará un JSON a partir de los datos de la biblioteca pasada como 
 Devolverá un String con el JSON creado.
 */
 
-/*
-string Fichero::crearJSONBiblioteca(Biblioteca biblioteca){
+
+string Fichero::crearJSONBiblioteca(list<Libro> biblio){
     string json = "[";
     
     /*
@@ -282,8 +282,8 @@ string Fichero::crearJSONBiblioteca(Biblioteca biblioteca){
     
     */
 
-   /*
-    for(Libro libro: biblioteca.getArrayLibros()){
+   
+    for(Libro libro: biblio){
         json += crearJSONLibro(libro) + ",";
     }
 
@@ -293,7 +293,7 @@ string Fichero::crearJSONBiblioteca(Biblioteca biblioteca){
     json += "]";
 
     return json;
-} */
+} 
 
 /*
 Este metodo lee el contenido de un fichero ubicado en una ruta pasado por parámetro.
@@ -365,13 +365,13 @@ int main() {
 
     bool response = f.existeDirectorio("./data/library/");
     cout << response;
-
+    /*
     string json = f.crearJSONUsuario();
     f.guardarJSON("./data/user/" ,json, "usuarioPrueba");
     f.leerDatosFichero("./data/user/", "usuarioPrueba", ".json");
     //json = f.crearJSONBiblioteca();
     f.guardarJSON("./data/library/", json, "Biblioteca");
-
+    */
     //MENÚ
     int opcion = -1;
     string nombre;
@@ -384,6 +384,8 @@ int main() {
     cin >> DNI;
 
     Usuario u = Usuario(nombre, DNI);
+
+    list<Usuario> listadoUsuarios = {u};
     
     do{
         Bienvenida();
@@ -407,6 +409,7 @@ int main() {
            break;
                 
         case 4:
+            //if (u.getLibroActual() != nullptr)
             cout << "Escribe el ISBN del libro: \n";
             
             cin >> isbnUsuario;
@@ -433,6 +436,43 @@ int main() {
             }
 
            break;
+
+        case 6:
+            f.guardarJSON("./data/user/", f.crearJSONUsuario(u), u.getNombre());
+            f.guardarJSON("./data/libros/", f.crearJSONBiblioteca(biblioteca), "Biblioteca");
+
+           break;
+        
+        case 7: {
+            cout << "Nombre: ";
+            cin >> nombre;
+            cout << "DNI: ";
+            cin >> DNI;
+            Usuario nuevoUsuario = Usuario(nombre, DNI);
+            u = nuevoUsuario;
+            listadoUsuarios.push_back(nuevoUsuario);
+           break;
+        }
+
+        case 8: {
+            for(Usuario user: listadoUsuarios){
+                user.visualizarUsuario();
+            }
+           break;
+        }
+       
+        case 9: {
+            cout << "Escribe el ISBN del libro: \n";
+            cin >> isbnUsuario;
+
+            list<Usuario>::iterator itrUsuario;
+            for(itrUsuario = listadoUsuarios.begin(); itrUsuario != listadoUsuarios.end(); itrUsuario++) {
+                if((*itrUsuario).getLibroActual().getIsbn().compare(isbnUsuario)) {
+                    cout << "El libro con ISBN " << isbnUsuario << " lo tiene el usuario " << (*itrUsuario).getNombre() << " y DNI " << (*itrUsuario).getDni() << endl;
+                }
+            }
+           break;
+        }
        
         default:
            break;
@@ -455,6 +495,10 @@ Sacar/Devolver un libro */
     cout << "[3] -> Ver si una persona tiene un libro o no \n";
     cout << "[4] -> Sacar un libro \n";
     cout << "[5] -> Devolver un libro \n";
+    cout << "[6] -> Guardar datos \n";
+    cout << "[7] -> Cambiar de usuario \n";
+    cout << "[8] -> Ver usuarios en la App \n";
+    cout << "[9] -> Comrpobar quien tiene un libro \n";
     cout << "[0] -> Salir \n";
     cout << "Elige una opción: \n";
 }
