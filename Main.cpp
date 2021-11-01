@@ -1,5 +1,6 @@
 #include <string>
 #include <list>
+#include "Libro.hpp"
 
 using namespace std;
 

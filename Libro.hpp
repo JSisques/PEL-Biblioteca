@@ -1,5 +1,6 @@
 
 #include <iostream>
+#include "Usuario.hpp"
 
 
 using namespace std;
@@ -27,7 +28,7 @@ class Libro{
             disponible=disp;
         }
 
-        bool isDisponible(); //Declaración disponibilidad
+        //bool isDisponible(); //Declaración disponibilidad
 
         int getId();
         string getNombre();

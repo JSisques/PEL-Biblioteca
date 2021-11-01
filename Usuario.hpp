@@ -2,7 +2,7 @@
 #include <ctime> 
 #include "Libro.hpp"
 
-class Usuario{
+class Usuario {
     private:
         int id;
         string nombre;
